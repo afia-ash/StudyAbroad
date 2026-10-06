@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Sign Up - StudyAbroad{% endblock %}
+
+{% block content %}
+<div class="flex items-center justify-center min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="w-full max-w-md p-8 space-y-6 bg-white rounded-xl shadow-lg">
+        <div class="text-center">
+            <h2 class="text-3xl font-extrabold text-gray-900">Create Your StudyAbroad Account</h2>
+            <p class="mt-2 text-sm text-gray-600">
+                Already have an account? 
+                <a href="{% url 'login' %}" class="font-medium text-primary hover:text-blue-600">Login here</a>
+            </p>
+        </div>
+        
+        <form class="space-y-6" method="POST">
+            {% csrf_token %}
+            
+            {# Non-field errors (e.g., password mismatch) #}
+            {% if form.non_field_errors %}
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                    <strong class="font-bold">Error!</strong>
+                    <ul class="mt-1 list-disc list-inside">
+                        {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            {# Loop through form fields to render them #}
+            {% for field in form %}
+                <div>
+                    <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700">
+                        {{ field.label }}
+                        {% if field.field.required %}<span class="text-red-500">*</span>{% endif %}
+                    </label>
+                    <div class="mt-1">
+                        {% if field.name == 'role' %}
+                            <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
+                                {% for radio in field %}
+                                    <div class="flex items-center">
+                                        {{ radio.tag }}
+                                        <label for="{{ radio.id_for_label }}" class="ml-2 block text-sm text-gray-900">
+                                            {{ radio.choice_label }}
+                                        </label>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ field }}
+                        {% endif %}
+                    </div>
+                    {# Field-specific errors #}
+                    {% for error in field.errors %}
+                        <p class="mt-2 text-sm text-red-600">{{ error }}</p>
+                    {% endfor %}
+                    {# Help text for fields #}
+                    {% if field.help_text %}
+                        <p class="mt-2 text-sm text-gray-500">{{ field.help_text }}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <div>
+                <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent rounded-button shadow-sm text-sm font-medium text-white bg-primary hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                    Register Account
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

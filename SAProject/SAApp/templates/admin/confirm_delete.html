@@ -1,0 +1,35 @@
+<!-- admin/confirm_delete.html -->
+{% extends 'base.html' %} {% load static %} {% block title %}Confirm Delete -
+Admin{% endblock %} {% block content %}
+<div
+  class="container mx-auto px-4 py-8 flex items-center justify-center min-h-[calc(100vh-160px)]"
+>
+  <div class="w-full max-w-md bg-white rounded-lg shadow-md p-8 text-center">
+    <h1 class="text-3xl font-bold text-red-700 mb-4">Confirm Deletion</h1>
+    <p class="text-lg text-gray-700 mb-6">
+      Are you sure you want to delete the {{ object_type }} "
+      <span class="font-semibold">
+        {% if object.name %} {{ object.name }} {% elif object.username %} {{
+        object.username }} {% else %} {{ object }} {% endif %}
+      </span>
+      "? This action cannot be undone.
+    </p>
+
+    <form method="post">
+      {% csrf_token %}
+      <button
+        type="submit"
+        class="px-6 py-3 bg-red-600 text-white rounded-button hover:bg-red-700 transition-colors text-base font-semibold shadow-md mr-4"
+      >
+        Yes, Delete
+      </button>
+      <a
+        href="{% url 'admin_dashboard' %}"
+        class="px-6 py-3 border border-gray-300 text-base font-medium rounded-button shadow-sm text-gray-700 bg-white hover:bg-gray-100"
+      >
+        Cancel
+      </a>
+    </form>
+  </div>
+</div>
+{% endblock %}

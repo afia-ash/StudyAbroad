@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Application Details - StudyAbroad{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-gray-900 mb-8 text-center">Application Details</h1>
+
+    <div class="bg-white p-8 rounded-lg shadow-md mb-8">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+                <h2 class="text-xl font-semibold text-gray-900 mb-4">Applicant Info</h2>
+                <p class="mb-2"><span class="font-medium text-gray-700">Full Name:</span> {{ application.full_name }}</p>
+                <p class="mb-2"><span class="font-medium text-gray-700">Date of Birth:</span> {{ application.dob }}</p>
+                <p class="mb-2"><span class="font-medium text-gray-700">Phone:</span> {{ application.phone }}</p>
+                <p class="mb-2"><span class="font-medium text-gray-700">Current Education:</span> {{ application.current_education }}</p>
+                <p class="mb-2"><span class="font-medium text-gray-700">Statement of Purpose:</span> {{ application.statement_of_purpose }}</p>
+            </div>
+            <div>
+                <h2 class="text-xl font-semibold text-gray-900 mb-4">Documents</h2>
+                <p class="mb-2"><span class="font-medium text-gray-700">Resume:</span>
+                    {% if application.resume %}
+                        <a href="{{ application.resume.url }}" target="_blank" class="text-primary underline">Download</a>
+                    {% else %}
+                        <span class="text-gray-500">Not uploaded</span>
+                    {% endif %}
+                </p>
+                <p class="mb-2"><span class="font-medium text-gray-700">Passport Copy:</span>
+                    {% if application.passport_copy %}
+                        <a href="{{ application.passport_copy.url }}" target="_blank" class="text-primary underline">Download</a>
+                    {% else %}
+                        <span class="text-gray-500">Not uploaded</span>
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-white p-8 rounded-lg shadow-md mb-8">
+        <h2 class="text-xl font-semibold text-gray-900 mb-4">Program Info</h2>
+        <p class="mb-2"><span class="font-medium text-gray-700">University:</span> {{ application.program.university.name }}</p>
+        <p class="mb-2"><span class="font-medium text-gray-700">Program:</span> {{ application.program.name }}</p>
+        <p class="mb-2"><span class="font-medium text-gray-700">Degree Level:</span> {{ application.program.degree_level }}</p>
+        <p class="mb-2"><span class="font-medium text-gray-700">Duration:</span> {{ application.program.duration }}</p>
+        <p class="mb-2"><span class="font-medium text-gray-700">Application Deadline:</span> {{ application.program.application_deadline|date:"M d, Y" }}</p>
+    </div>
+
+    <div class="bg-white p-8 rounded-lg shadow-md mb-8">
+        <h2 class="text-xl font-semibold text-gray-900 mb-4">Application Status</h2>
+        <p class="mb-2"><span class="font-medium text-gray-700">Status:</span>
+            <span class="
+                px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                {% if application.status == 'accepted' %}bg-green-100 text-green-800
+                {% elif application.status == 'rejected' %}bg-red-100 text-red-800
+                {% elif application.status == 'under_review' %}bg-blue-100 text-blue-800
+                {% else %}bg-yellow-100 text-yellow-800{% endif %}">
+                {{ application.get_status_display }}
+            </span>
+        </p>
+        <p class="mb-2"><span class="font-medium text-gray-700">Submitted On:</span> {{ application.submission_date|date:"M d, Y H:i" }}</p>
+    </div>
+
+    <div class="mt-8 text-center">
+        <a href="{% url 'university_dashboard' %}" class="inline-block px-6 py-3 bg-primary text-white rounded-button hover:bg-blue-600 transition-colors text-base font-semibold">Back to Dashboard</a>
+    </div>
+</div>
+{% endblock %}

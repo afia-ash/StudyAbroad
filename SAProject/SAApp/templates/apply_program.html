@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Apply - {{ program.name }}{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto py-8">
+  <h1 class="text-3xl font-bold text-gray-900 mb-6">Apply to {{ program.name }}</h1>
+
+  <form method="post" enctype="multipart/form-data" class="bg-white shadow-md rounded-lg px-8 py-6 space-y-4">
+    {% csrf_token %}
+    {% for field in form %}
+      <div>
+        <label class="block text-sm font-medium text-gray-700">{{ field.label }}</label>
+        <div class="mt-1">{{ field }}</div>
+        {% if field.help_text %}
+          <p class="text-xs text-gray-500 mt-1">{{ field.help_text }}</p>
+        {% endif %}
+        {% for error in field.errors %}
+          <p class="text-sm text-red-600 mt-1">{{ error }}</p>
+        {% endfor %}
+      </div>
+    {% endfor %}
+    <div class="pt-2">
+      <button type="submit" class="px-6 py-2 bg-primary text-white rounded-lg">Submit application</button>
+    </div>
+  </form>
+</div>
+{% endblock %}

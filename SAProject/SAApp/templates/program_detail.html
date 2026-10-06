@@ -1,0 +1,55 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ program.name }} - StudyAbroad{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="bg-white rounded-lg shadow-md overflow-hidden p-8 mb-8">
+        <h1 class="text-4xl font-bold text-gray-900 mb-4">{{ program.name }}</h1>
+        <p class="text-xl text-gray-600 mb-6">at <a href="{% url 'university_detail' pk=program.university.pk %}" class="text-primary hover:underline">{{ program.university.name }}</a></p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6">
+            <div>
+                <h2 class="text-2xl font-semibold text-gray-900 mb-4">Program Details</h2>
+                <div class="space-y-3 text-lg text-gray-700">
+                    <p><span class="font-medium text-gray-800">Degree Level:</span> {{ program.degree_level }}</p>
+                    <p><span class="font-medium text-gray-800">Duration:</span> {{ program.duration }}</p>
+                    <p><span class="font-medium text-gray-800">Application Deadline:</span> {{ program.application_deadline|date:"M d, Y" }}</p>
+                </div>
+            </div>
+            <div>
+                <h2 class="text-2xl font-semibold text-gray-900 mb-4">Requirements</h2>
+                <p class="text-lg text-gray-700 leading-relaxed">{{ program.requirements|linebreaksbr }}</p>
+            </div>
+        </div>
+
+        {% if user.is_authenticated and user.role == 'student' %}
+            <div class="mt-8 text-center">
+                <form action="{% url 'apply_program' pk=program.pk %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="px-8 py-4 bg-primary text-white rounded-button hover:bg-blue-600 transition-colors text-lg font-semibold shadow-md">
+                        <i class="ri-file-add-line mr-2"></i> Apply for this Program
+                    </button>
+                </form>
+            </div>
+        {% elif not user.is_authenticated %}
+            <div class="mt-8 text-center bg-gray-100 p-6 rounded-lg">
+                <p class="text-lg text-gray-700 mb-4">You must be logged in as a student to apply for programs.</p>
+                <a href="{% url 'login' %}" class="px-6 py-3 bg-purple-700 text-white rounded-button hover:bg-purple-800 transition-colors text-base font-semibold">
+                    Login to Apply
+                </a>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="mt-8 text-center">
+        <a href="{% url 'universities' %}" class="inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-button shadow-sm text-gray-700 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <i class="ri-arrow-left-line mr-2"></i> Back to Universities
+        </a>
+        <a href="{% url 'programs' %}" class="ml-4 inline-flex items-center px-6 py-3 border border-gray-300 text-base font-medium rounded-button shadow-sm text-gray-700 bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+            <i class="ri-book-mark-line mr-2"></i> View All Programs
+        </a>
+    </div>
+</div>
+{% endblock %}

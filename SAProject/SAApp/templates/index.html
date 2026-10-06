@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StudyAbroad - International Education Management Platform</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css"
+      rel="stylesheet"
+    />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              primary: "#3B82F6",
+              secondary: "#10B981",
+            },
+            borderRadius: {
+              none: "0px",
+              sm: "4px",
+              DEFAULT: "8px",
+              md: "12px",
+              lg: "16px",
+              xl: "20px",
+              "2xl": "24px",
+              "3xl": "32px",
+              full: "9999px",
+              button: "8px",
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      :where([class^="ri-"])::before {
+        content: "\f3c2";
+      }
+    </style>
+  </head>
+  <body class="bg-gray-50">
+    <nav class="bg-white shadow-sm border-b">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+          <div class="flex items-center">
+            <a
+              href="{% url 'home' %}"
+              class="text-2xl font-['Pacifico'] text-primary"
+            >
+              StudyAbroad
+            </a>
+          </div>
+          <div class="hidden md:flex items-center space-x-8">
+            <a
+              href="{% url 'universities' %}"
+              class="text-gray-700 hover:text-primary transition-colors"
+              >Universities</a
+            >
+            <a
+              href="{% url 'programs' %}"
+              class="text-gray-700 hover:text-primary transition-colors"
+              >Programs</a
+            >
+            <a
+              href="{% url 'applications' %}"
+              class="text-gray-700 hover:text-primary transition-colors"
+              >Applications</a
+            >
+            <a
+              href="{% url 'about' %}"
+              class="text-gray-700 hover:text-primary transition-colors"
+            >
+              About
+            </a>
+            <a
+              href="{% url 'contact' %}"
+              class="text-gray-700 hover:text-primary transition-colors"
+              >Contact</a
+            >
+          </div>
+          <div class="flex items-center space-x-4">
+            <a
+              href="{% url 'login' %}"
+              class="px-4 py-2 bg-purple-700 text-white rounded"
+              >Login</a
+            >
+            <a
+              href="{% url 'register' %}"
+              class="px-4 py-2 bg-green-600 text-white rounded"
+              >Register</a
+            >
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <section
+      class="relative min-h-screen flex items-center"
+      style="
+        background-image: url('https://readdy.ai/api/search-image?query=Modern%20university%20campus%20with%20international%20students%20from%20diverse%20backgrounds%20studying%20together%20in%20a%20bright%2C%20contemporary%20learning%20environment%20with%20glass%20buildings%20and%20green%20spaces%2C%20left%20side%20has%20subtle%20white%20gradient%20overlay%20for%20text%20readability%2C%20professional%20education%20photography%20style%2C%20clean%20and%20inspiring%20atmosphere&width=1920&height=1080&seq=hero001&orientation=landscape');
+        background-size: cover;
+        background-position: center;
+      "
+    >
+      <div
+        class="absolute inset-0 bg-gradient-to-r from-white/95 via-white/80 to-transparent"
+      ></div>
+      <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+        <div class="max-w-2xl">
+          <h1 class="text-5xl font-bold text-gray-900 mb-6 leading-tight">
+            Your Gateway to International Education Excellence
+          </h1>
+          <p class="text-xl text-gray-600 mb-8 leading-relaxed">
+            Streamline your study abroad journey with our comprehensive
+            management platform. From application to acceptance, we make
+            international education accessible and efficient.
+          </p>
+          <div class="flex flex-col sm:flex-row gap-4">
+            <a
+              href="{% url 'register' %}"
+              class="bg-primary text-white px-8 py-4 !rounded-button hover:bg-blue-600 transition-colors text-lg font-semibold whitespace-nowrap"
+              >Start Your Journey</a
+            >
+            <a
+              href="{% url 'universities' %}"
+              class="border-2 border-gray-300 text-gray-700 px-8 py-4 !rounded-button hover:border-primary hover:text-primary transition-colors text-lg font-semibold whitespace-nowrap"
+              >Explore Universities</a
+            >
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-bold text-gray-900 mb-4">
+            Comprehensive Study Abroad Management
+          </h2>
+          <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+            Our platform provides everything you need to manage your
+            international education journey efficiently and effectively.
+          </p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="bg-gray-50 p-8 rounded-xl">
+            <div
+              class="w-12 h-12 flex items-center justify-center bg-primary/10 rounded-lg mb-6"
+            >
+              <i class="ri-global-line text-primary text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-4">
+              Global University Database
+            </h3>
+            <p class="text-gray-600">
+              Access comprehensive information about universities worldwide,
+              including programs, requirements, and application deadlines.
+            </p>
+          </div>
+          <div class="bg-gray-50 p-8 rounded-xl">
+            <div
+              class="w-12 h-12 flex items-center justify-center bg-secondary/10 rounded-lg mb-6"
+            >
+              <i class="ri-file-list-3-line text-secondary text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-4">
+              Application Tracking
+            </h3>
+            <p class="text-gray-600">
+              Monitor your application status in real-time with automated
+              notifications and progress updates throughout the process.
+            </p>
+          </div>
+          <div class="bg-gray-50 p-8 rounded-xl">
+            <div
+              class="w-12 h-12 flex items-center justify-center bg-primary/10 rounded-lg mb-6"
+            >
+              <i class="ri-team-line text-primary text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-4">
+              Expert Support
+            </h3>
+            <p class="text-gray-600">
+              Get guidance from experienced administrators and direct
+              communication with university representatives.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+          <div>
+            <h2 class="text-4xl font-bold text-gray-900 mb-6">
+              Powerful Dashboard Interface
+            </h2>
+            <p class="text-lg text-gray-600 mb-8">
+              Manage all aspects of your study abroad journey from a single,
+              intuitive dashboard designed for both students and administrators.
+            </p>
+            <div class="space-y-4">
+              <div class="flex items-center">
+                <div
+                  class="w-6 h-6 flex items-center justify-center bg-primary rounded-full mr-3"
+                >
+                  <i class="ri-check-line text-white text-sm"></i>
+                </div>
+                <span class="text-gray-700"
+                  >Role-based access for students and administrators</span
+                >
+              </div>
+              <div class="flex items-center">
+                <div
+                  class="w-6 h-6 flex items-center justify-center bg-primary rounded-full mr-3"
+                >
+                  <i class="ri-check-line text-white text-sm"></i>
+                </div>
+                <span class="text-gray-700"
+                  >Real-time application status updates</span
+                >
+              </div>
+              <div class="flex items-center">
+                <div
+                  class="w-6 h-6 flex items-center justify-center bg-primary rounded-full mr-3"
+                >
+                  <i class="ri-check-line text-white text-sm"></i>
+                </div>
+                <span class="text-gray-700"
+                  >Document management and secure uploads</span
+                >
+              </div>
+              <div class="flex items-center">
+                <div
+                  class="w-6 h-6 flex items-center justify-center bg-primary rounded-full mr-3"
+                >
+                  <i class="ri-check-line text-white text-sm"></i>
+                </div>
+                <span class="text-gray-700"
+                  >Integrated communication system</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="bg-white rounded-2xl shadow-xl p-8">
+            <div class="flex items-center justify-between mb-6">
+              <h3 class="text-lg font-semibold text-gray-900">
+                Student Dashboard
+              </h3>
+              <div
+                class="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-full"
+              >
+                <i class="ri-user-line text-gray-600"></i>
+              </div>
+            </div>
+            <div class="space-y-4">
+              <div class="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <div class="flex items-center justify-between">
+                  <span class="font-medium text-blue-900"
+                    >University of Cambridge</span
+                  >
+                  <span
+                    class="text-sm bg-blue-100 text-blue-800 px-2 py-1 rounded-full"
+                    >Under Review</span
+                  >
+                </div>
+                <p class="text-sm text-blue-700 mt-1">
+                  Computer Science Masters
+                </p>
+              </div>
+              <div class="bg-green-50 border border-green-200 rounded-lg p-4">
+                <div class="flex items-center justify-between">
+                  <span class="font-medium text-green-900"
+                    >Stanford University</span
+                  >
+                  <span
+                    class="text-sm bg-green-100 text-green-800 px-2 py-1 rounded-full"
+                    >Accepted</span
+                  >
+                </div>
+                <p class="text-sm text-green-700 mt-1">MBA Program</p>
+              </div>
+              <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                <div class="flex items-center justify-between">
+                  <span class="font-medium text-yellow-900"
+                    >University of Toronto</span
+                  >
+                  <span
+                    class="text-sm bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full"
+                    >Pending</span
+                  >
+                </div>
+                <p class="text-sm text-yellow-700 mt-1">Engineering Masters</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-bold text-gray-900 mb-4">
+            Trusted by Students Worldwide
+          </h2>
+          <p class="text-xl text-gray-600">
+            Join thousands of successful international students who have
+            achieved their dreams through our platform.
+          </p>
+        </div>
+        <div class="grid md:grid-cols-4 gap-8">
+          <div class="text-center">
+            <div class="text-4xl font-bold text-primary mb-2">2,500+</div>
+            <div class="text-gray-600">Partner Universities</div>
+          </div>
+          <div class="text-center">
+            <div class="text-4xl font-bold text-primary mb-2">45,000+</div>
+            <div class="text-gray-600">Successful Applications</div>
+          </div>
+          <div class="text-center">
+            <div class="text-4xl font-bold text-primary mb-2">120+</div>
+            <div class="text-gray-600">Countries Covered</div>
+          </div>
+          <div class="text-center">
+            <div class="text-4xl font-bold text-primary mb-2">98%</div>
+            <div class="text-gray-600">Success Rate</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-bold text-gray-900 mb-4">
+            Simple 4-Step Process
+          </h2>
+          <p class="text-xl text-gray-600">
+            From exploration to enrollment, we guide you through every step of
+            your international education journey.
+          </p>
+        </div>
+        <div class="grid md:grid-cols-4 gap-8">
+          <div class="text-center">
+            <div
+              class="w-16 h-16 flex items-center justify-center bg-primary rounded-full mx-auto mb-4"
+            >
+              <i class="ri-search-line text-white text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">1. Explore</h3>
+            <p class="text-gray-600">
+              Browse our comprehensive database of universities and programs
+              worldwide to find your perfect match.
+            </p>
+          </div>
+          <div class="text-center">
+            <div
+              class="w-16 h-16 flex items-center justify-center bg-primary rounded-full mx-auto mb-4"
+            >
+              <i class="ri-file-edit-line text-white text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">2. Apply</h3>
+            <p class="text-gray-600">
+              Submit your applications with our streamlined process and secure
+              document upload system.
+            </p>
+          </div>
+          <div class="text-center">
+            <div
+              class="w-16 h-16 flex items-center justify-center bg-primary rounded-full mx-auto mb-4"
+            >
+              <i class="ri-time-line text-white text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">3. Track</h3>
+            <p class="text-gray-600">
+              Monitor your application progress in real-time with automated
+              updates and notifications.
+            </p>
+          </div>
+          <div class="text-center">
+            <div
+              class="w-16 h-16 flex items-center justify-center bg-primary rounded-full mx-auto mb-4"
+            >
+              <i class="ri-graduation-cap-line text-white text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-gray-900 mb-2">4. Enroll</h3>
+            <p class="text-gray-600">
+              Receive your acceptance and begin your international education
+              journey with confidence.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="py-20 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-16">
+          <h2 class="text-4xl font-bold text-gray-900 mb-4">
+            What Our Students Say
+          </h2>
+          <p class="text-xl text-gray-600">
+            Hear from successful international students who achieved their
+            dreams through our platform.
+          </p>
+        </div>
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="bg-gray-50 p-8 rounded-xl">
+            <div class="flex items-center mb-4">
+              <img
+                src="https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20confident%20young%20Asian%20female%20student%20with%20a%20warm%20smile%2C%20wearing%20business%20casual%20attire%2C%20clean%20white%20background%2C%20high%20quality%20portrait%20photography&width=80&height=80&seq=student001&orientation=squarish"
+                alt="Student"
+                class="w-12 h-12 rounded-full object-cover mr-4"
+              />
+              <div>
+                <h4 class="font-semibold text-gray-900">Sarah Chen</h4>
+                <p class="text-sm text-gray-600">MIT, Computer Science</p>
+              </div>
+            </div>
+            <p class="text-gray-700">
+              "The platform made my application process incredibly smooth. The
+              real-time tracking and expert guidance helped me secure admission
+              to my dream university."
+            </p>
+          </div>
+          <div class="bg-gray-50 p-8 rounded-xl">
+            <div class="flex items-center mb-4">
+              <img
+                src="https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20confident%20young%20European%20male%20student%20with%20a%20friendly%20expression%2C%20wearing%20business%20casual%20attire%2C%20clean%20white%20background%2C%20high%20quality%20portrait%20photography&width=80&height=80&seq=student002&orientation=squarish"
+                alt="Student"
+                class="w-12 h-12 rounded-full object-cover mr-4"
+              />
+              <div>
+                <h4 class="font-semibold text-gray-900">Marcus Rodriguez</h4>
+                <p class="text-sm text-gray-600">
+                  Oxford, Business Administration
+                </p>
+              </div>
+            </div>
+            <p class="text-gray-700">
+              "Outstanding support throughout the entire process. The dashboard
+              interface is intuitive and the communication with universities was
+              seamless."
+            </p>
+          </div>
+          <div class="bg-gray-50 p-8 rounded-xl">
+            <div class="flex items-center mb-4">
+              <img
+                src="https://readdy.ai/api/search-image?query=Professional%20headshot%20of%20a%20confident%20young%20African%20female%20student%20with%20a%20bright%20smile%2C%20wearing%20business%20casual%20attire%2C%20clean%20white%20background%2C%20high%20quality%20portrait%20photography&width=80&height=80&seq=student003&orientation=squarish"
+                alt="Student"
+                class="w-12 h-12 rounded-full object-cover mr-4"
+              />
+              <div>
+                <h4 class="font-semibold text-gray-900">Amara Johnson</h4>
+                <p class="text-sm text-gray-600">Cambridge, Engineering</p>
+              </div>
+            </div>
+            <p class="text-gray-700">
+              "I couldn't have navigated the complex application process without
+              this platform. It simplified everything and gave me confidence in
+              my applications."
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="bg-gray-900 text-white py-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid md:grid-cols-4 gap-8">
+          <div>
+            <a
+              href="{% url 'home' %}"
+              class="text-2xl font-['Pacifico'] text-primary"
+            >
+              StudyAbroad
+            </a>
+            <p class="text-gray-400 mt-4">
+              Your trusted partner in international education management,
+              connecting students with opportunities worldwide.
+            </p>
+            <div class="flex space-x-4 mt-6">
+              <div
+                class="w-8 h-8 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors cursor-pointer"
+              >
+                <i class="ri-facebook-fill text-sm"></i>
+              </div>
+              <div
+                class="w-8 h-8 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors cursor-pointer"
+              >
+                <i class="ri-twitter-fill text-sm"></i>
+              </div>
+              <div
+                class="w-8 h-8 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors cursor-pointer"
+              >
+                <i class="ri-linkedin-fill text-sm"></i>
+              </div>
+              <div
+                class="w-8 h-8 flex items-center justify-center bg-gray-800 rounded-full hover:bg-primary transition-colors cursor-pointer"
+              >
+                <i class="ri-instagram-fill text-sm"></i>
+              </div>
+            </div>
+          </div>
+          <div>
+            <h3 class="font-semibold mb-4">Platform</h3>
+            <ul class="space-y-2 text-gray-400">
+              <li>
+                <a
+                  href="{% url 'universities' %}"
+                  class="hover:text-white transition-colors"
+                  >Universities</a
+                >
+              </li>
+              <li>
+                <a
+                  href="{% url 'programs' %}"
+                  class="hover:text-white transition-colors"
+                  >Programs</a
+                >
+              </li>
+              <li>
+                <a
+                  href="{% url 'applications' %}"
+                  class="hover:text-white transition-colors"
+                  >Applications</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-semibold mb-4">Support</h3>
+            <ul class="space-y-2 text-gray-400">
+              <li>
+                <a href="#" class="hover:text-white transition-colors"
+                  >Help Center</a
+                >
+              </li>
+              <li>
+                <a
+                  href="{% url 'contact' %}"
+                  class="hover:text-white transition-colors"
+                  >Contact Us</a
+                >
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors"
+                  >Documentation</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-semibold mb-4">Company</h3>
+            <ul class="space-y-2 text-gray-400">
+              <li>
+                <a
+                  href="{% url 'about' %}"
+                  class="text-gray-700 hover:text-primary transition-colors"
+                >
+                  About Us
+                </a>
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors"
+                  >Privacy Policy</a
+                >
+              </li>
+              <li>
+                <a href="#" class="hover:text-white transition-colors"
+                  >Terms of Service</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div
+          class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400"
+        >
+          <p>&copy; 2025 StudyAbroad Management System. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+    <script id="navigation-mobile">
+      document.addEventListener("DOMContentLoaded", function () {
+        const mobileMenuButton = document.querySelector(
+          "[data-mobile-menu-toggle]"
+        );
+        const mobileMenu = document.querySelector("[data-mobile-menu]");
+
+        if (mobileMenuButton && mobileMenu) {
+          mobileMenuButton.addEventListener("click", function () {
+            mobileMenu.classList.toggle("hidden");
+          });
+        }
+      });
+    </script>
+
+    <script id="smooth-scrolling">
+      document.addEventListener("DOMContentLoaded", function () {
+        const links = document.querySelectorAll('a[href^="#"]');
+
+        links.forEach((link) => {
+          link.addEventListener("click", function (e) {
+            e.preventDefault();
+            const targetId = this.getAttribute("href");
+            const targetElement = document.querySelector(targetId);
+
+            if (targetElement) {
+              targetElement.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
+            }
+          });
+        });
+      });
+    </script>
+
+    <script id="form-interactions">
+      document.addEventListener("DOMContentLoaded", function () {
+        const buttons = document.querySelectorAll("button");
+
+        buttons.forEach((button) => {
+          button.addEventListener("click", function (e) {
+            if (
+              this.textContent.includes("Get Started") ||
+              this.textContent.includes("Start Your Journey")
+            ) {
+              e.preventDefault();
+              alert(
+                "Welcome to StudyAbroad! Registration functionality will be implemented in the next phase."
+              );
+            } else if (this.textContent.includes("Sign In")) {
+              e.preventDefault();
+              alert(
+                "Sign in functionality will be implemented with the authentication system."
+              );
+            } else if (this.textContent.includes("Schedule Demo")) {
+              e.preventDefault();
+              alert(
+                "Demo scheduling functionality will be implemented with the booking system."
+              );
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

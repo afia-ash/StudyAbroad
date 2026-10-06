@@ -1,0 +1,57 @@
+<!-- admin/university_form.html -->
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ page_title }} - Admin{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8 flex items-center justify-center min-h-[calc(100vh-160px)]">
+    <div class="w-full max-w-2xl bg-white rounded-lg shadow-md p-8">
+        <h1 class="text-3xl font-bold text-gray-900 mb-6 text-center">{{ page_title }}</h1>
+        
+        <form method="post" enctype="multipart/form-data" class="space-y-6">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                    <strong class="font-bold">Error!</strong>
+                    <ul class="mt-1 list-disc list-inside">
+                        {% for error in form.non_field_errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+
+            {% for field in form %}
+                <div>
+                    <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-gray-700">
+                        {{ field.label }}
+                        {% if field.field.required %}<span class="text-red-500">*</span>{% endif %}
+                    </label>
+                    <div class="mt-1">
+                        {{ field }}
+                    </div>
+                    {% for error in field.errors %}
+                        <p class="mt-2 text-sm text-red-600">{{ error }}</p>
+                    {% endfor %}
+                    {% if field.help_text %}
+                        <p class="mt-2 text-sm text-gray-500">{{ field.help_text }}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <div class="flex justify-end space-x-4 mt-8">
+                <a href="{% url 'admin_university_list' %}" class="px-6 py-3 border border-gray-300 text-base font-medium rounded-button shadow-sm text-gray-700 bg-white hover:bg-gray-100">
+                    Cancel
+                </a>
+                <button type="submit" class="px-6 py-3 bg-primary text-white rounded-button hover:bg-blue-600 transition-colors text-base font-semibold shadow-md">
+                    Save University
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+

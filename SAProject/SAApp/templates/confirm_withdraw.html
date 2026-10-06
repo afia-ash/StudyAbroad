@@ -1,0 +1,6 @@
+<form method="post">
+  {% csrf_token %}
+  <p>Are you sure you want to withdraw your application to {{ application.program.name }}?</p>
+  <button type="submit">Yes, Withdraw</button>
+  <a href="{% url 'applications' %}">Cancel</a>
+</form>

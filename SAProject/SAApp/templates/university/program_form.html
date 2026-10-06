@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ page_title }}{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-3xl font-bold text-gray-900 mb-8 text-center">{{ page_title }}</h1>
+
+    <div class="bg-white rounded-lg shadow-md max-w-xl mx-auto p-6">
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+
+            <div class="mt-6 flex justify-end space-x-4">
+                <button type="submit" class="px-6 py-2 bg-primary text-white rounded shadow hover:bg-blue-600 transition-colors">
+                    Save Program
+                </button>
+                <a href="{% url 'university_program_list' %}" class="px-6 py-2 border border-gray-300 bg-white rounded shadow text-gray-700 hover:bg-gray-100">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

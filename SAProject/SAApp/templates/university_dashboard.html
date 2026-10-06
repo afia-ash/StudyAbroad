@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}University Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-gray-900 mb-8 text-center">University Dashboard</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        <!-- Statistic Card: Programs -->
+        <div class="bg-white rounded-lg shadow-md p-6 text-center">
+            <div class="text-primary mb-3"><i class="ri-book-mark-line text-4xl"></i></div>
+            <h2 class="text-3xl font-bold text-gray-900">{{ total_programs }}</h2>
+            <p class="text-gray-600">Programs Offered</p>
+            <a href="{% url 'university_program_list' %}" class="mt-4 inline-block text-primary hover:underline text-sm">Manage Programs &rarr;</a>
+        </div>
+        <!-- Statistic Card: Applications -->
+        <div class="bg-white rounded-lg shadow-md p-6 text-center">
+            <div class="text-secondary mb-3"><i class="ri-file-list-3-line text-4xl"></i></div>
+            <h2 class="text-3xl font-bold text-gray-900">{{ total_applications }}</h2>
+            <p class="text-gray-600">Total Applications</p>
+            <a href="{% url 'university_applications' %}" class="mt-4 inline-block text-secondary hover:underline text-sm">View Applications &rarr;</a>
+        </div>
+        <!-- Statistic Card: Accepted Applications -->
+        <div class="bg-white rounded-lg shadow-md p-6 text-center">
+            <div class="text-green-600 mb-3"><i class="ri-check-line text-4xl"></i></div>
+            <h2 class="text-3xl font-bold text-gray-900">{{ accepted_applications }}</h2>
+            <p class="text-gray-600">Accepted Applications</p>
+        </div>
+    </div>
+
+    <!-- Application Table -->
+    <div class="bg-white rounded-lg shadow-md overflow-hidden mb-10">
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Student</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Program</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Submitted On</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                    {% for application in applications %}
+                    <tr>
+                        <td class="px-6 py-4 text-sm font-medium text-gray-900">{{ application.student.username }}</td>
+                        <td class="px-6 py-4 text-sm text-gray-700">{{ application.program.name }}</td>
+                        <td class="px-6 py-4">
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
+                            {% if application.status == 'accepted' %}bg-green-100 text-green-800
+                            {% elif application.status == 'rejected' %}bg-red-100 text-red-800
+                            {% elif application.status == 'under_review' %}bg-blue-100 text-blue-800
+                            {% else %}bg-yellow-100 text-yellow-800{% endif %}">
+                                {{ application.get_status_display }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-sm text-gray-500">{{ application.submission_date|date:"M d, Y H:i" }}</td>
+                        
+                        <td class="px-6 py-4 text-right text-sm font-medium">
+                            <a href="{% url 'university_application_review' application.pk %}" class="px-3 py-1 bg-secondary text-white rounded text-xs font-medium hover:bg-gray-600 mr-2 transition-colors">Review</a>
+                            <form action="{% url 'update_application_status' pk=application.pk %}" method="post" class="inline">
+                                {% csrf_token %}
+                                <select name="status" class="mr-2 py-1 px-2 border rounded">
+                                    {% for choice_value, choice_label in application.STATUS_CHOICES %}
+                                        <option value="{{ choice_value }}" {% if application.status == choice_value %}selected{% endif %}>{{ choice_label }}</option>
+                                    {% endfor %}
+                                </select>
+                                <button type="submit" class="px-3 py-1 bg-primary text-white rounded text-xs font-medium hover:bg-blue-600 transition-colors">Update</button>
+                            </form>
+                        </td>
+
+                    </tr>
+                    {% empty %}
+                    <tr class="bg-gray-50">
+                        <td colspan="5" class="text-center py-10 text-gray-500">No applications submitted yet.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="bg-white p-8 rounded-lg shadow-md">
+        <h2 class="text-2xl font-semibold text-gray-900 mb-6">Quick Actions</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4">
+            <a href="{% url 'edit_university_profile' %}" class="flex items-center justify-center p-4 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors">
+                <i class="ri-edit-line text-primary text-2xl mr-3"></i>
+                <span class="text-gray-800 font-medium">Edit Profile</span>
+            </a>
+            <a href="{% url 'add_program' %}" class="flex items-center justify-center p-4 bg-green-50 hover:bg-green-100 rounded-lg transition-colors">
+                <i class="ri-add-circle-line text-secondary text-2xl mr-3"></i>
+                <span class="text-gray-800 font-medium">Add New Program</span>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

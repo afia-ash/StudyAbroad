@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <h1 class="text-4xl font-bold text-gray-900 mb-8 text-center">Administrator Dashboard</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <!-- Statistic Card: Users -->
+        <div class="bg-white rounded-lg shadow-md p-6 text-center">
+            <div class="text-primary mb-3"><i class="ri-group-line text-4xl"></i></div>
+            <h2 class="text-3xl font-bold text-gray-900">{{ total_users }}</h2>
+            <p class="text-gray-600">Total Users</p>
+            <a href="{% url 'admin_user_list' %}" class="mt-4 inline-block text-primary hover:underline text-sm">Manage Users &rarr;</a>
+        </div>
+
+        <!-- Statistic Card: Universities -->
+        <div class="bg-white rounded-lg shadow-md p-6 text-center">
+            <div class="text-secondary mb-3"><i class="ri-building-line text-4xl"></i></div>
+            <h2 class="text-3xl font-bold text-gray-900">{{ total_universities }}</h2>
+            <p class="text-gray-600">Total Universities</p>
+            <a href="{% url 'admin_university_list' %}" class="mt-4 inline-block text-secondary hover:underline text-sm">Manage Universities &rarr;</a>
+        </div>
+
+        <!-- Statistic Card: Programs -->
+        <div class="bg-white rounded-lg shadow-md p-6 text-center">
+            <div class="text-purple-600 mb-3"><i class="ri-file-list-3-line text-4xl"></i></div>
+            <h2 class="text-3xl font-bold text-gray-900">{{ total_programs }}</h2>
+            <p class="text-gray-600">Total Programs</p>
+            <a href="{% url 'admin_program_list' %}" class="mt-4 inline-block text-purple-600 hover:underline text-sm">Manage Programs &rarr;</a>
+        </div>
+
+        <!-- Statistic Card: Applications -->
+        <div class="bg-white rounded-lg shadow-md p-6 text-center">
+            <div class="text-pink-600 mb-3"><i class="ri-file-list-3-line text-4xl"></i></div>
+            <h2 class="text-3xl font-bold text-gray-900">{{ total_applications }}</h2>
+            <p class="text-gray-600">Total Applications</p>
+            <a href="{% url 'applications' %}" class="mt-4 inline-block text-pink-600 hover:underline text-sm">View Applications &rarr;</a>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="bg-white p-8 rounded-lg shadow-md">
+        <h2 class="text-2xl font-semibold text-gray-900 mb-6">Quick Actions</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <a href="{% url 'add_university' %}" class="flex items-center justify-center p-4 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors">
+                <i class="ri-add-circle-line text-primary text-2xl mr-3"></i>
+                <span class="text-gray-800 font-medium">Add New University</span>
+            </a>
+            <a href="{% url 'add_program' %}" class="flex items-center justify-center p-4 bg-green-50 hover:bg-green-100 rounded-lg transition-colors">
+                <i class="ri-add-circle-line text-secondary text-2xl mr-3"></i>
+                <span class="text-gray-800 font-medium">Add New Program</span>
+            </a>
+            <a href="{% url 'add_user_admin' %}" class="flex items-center justify-center p-4 bg-purple-50 hover:bg-purple-100 rounded-lg transition-colors">
+                <i class="ri-user-add-line text-purple-600 text-2xl mr-3"></i>
+                <span class="text-gray-800 font-medium">Add New User</span>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
